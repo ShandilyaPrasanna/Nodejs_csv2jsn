@@ -1,6 +1,6 @@
 
 
-
+//----------------------variable declaration-------
 count=0; 
 var sta = {};
 var person = {};
@@ -15,15 +15,17 @@ var inst;
 var state=[];
 
 var fs = require('fs'),
+//---------------------------------------------------
 
 readline = require('readline');
 
 
 var rd = readline.createInterface({
 
-    input: fs.createReadStream('../data.csv'),
+    input: fs.createReadStream('../data.csv'),  //--------input stream
 
-    output:fs.createWriteStream('urban.json'),
+    output:fs.createWriteStream('urban.json'), //-----output stream
+
 
 });
 
@@ -31,15 +33,16 @@ var rd = readline.createInterface({
 
 rd.on('line', function(line) {
 
-    urbanization(line);
+    urbanization(line); //-------------calling function urbanization()
 });
+
 
 
 rd.on('close',function()
 {   
 
-    array.sort(compare);
-    rd.output.write(JSON.stringify(array));   
+    array.sort(compare); //--------------calling compare in sort
+    rd.output.write(JSON.stringify(array));   //--------converting array of objects in JSON and writing output in file
 
 });
 
@@ -50,7 +53,7 @@ function urbanization(text)
 {
     if(count==0)
     {
-        header=text.split(',');
+        header=text.split(','); //----------converting text in array and storing text in header, by using spit
 
         
         count++;
@@ -59,7 +62,7 @@ function urbanization(text)
         inage=header.indexOf("Age-group");
         inTp=header.indexOf("Total Persons");
         inst=header.indexOf("Area Name");
-        count ++;
+        count ++;                             //--------------incrementing count
         state.push(header[inst]);
 
     }
@@ -70,12 +73,13 @@ function urbanization(text)
 
 
 
-        a=text.split(',');
+        a=text.split(',');  //----------converting text in array and storing text in a, by using spit
+
 
         if(a[inTRU]=="Total")
             if(a[inage]=="All ages")
             {
-                if((state.indexOf(a[inst])<0))
+                if((state.indexOf(a[inst])<0))  //-------condition to check if duplicate data of state is not stored
                 {
 
 
@@ -121,7 +125,8 @@ function urbanization(text)
 
 
 }   
+//--------------------------functon arrange object is decending order---------------------------
 
 function compare(a,b) {
-    return(a.person-b.person);
+    return(b.person-a.person);
 }
