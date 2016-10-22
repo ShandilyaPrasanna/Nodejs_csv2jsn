@@ -1,7 +1,8 @@
 
 
 //----------------------variable declaration-------
-count=0; 
+
+var count=0; 
 var sta = {};
 var person = {};
 var a=[];
@@ -14,26 +15,27 @@ var inTp;
 var inst; 
 var state=[];
 
-var fs = require('fs'),
 //---------------------------------------------------
 
+
+var fs = require('fs'),
 readline = require('readline');
 
 
 var rd = readline.createInterface({
 
     input: fs.createReadStream('../data.csv'),  //--------input stream
-
     output:fs.createWriteStream('urban.json'), //-----output stream
-
 
 });
 
 
 
-rd.on('line', function(line) {
+rd.on('line', function(line) 
+{
 
     urbanization(line); //-------------calling function urbanization()
+
 });
 
 
@@ -54,64 +56,38 @@ function urbanization(text)
     if(count==0)
     {
         header=text.split(','); //----------converting text in array and storing text in header, by using spit
-
-        
         count++;
-
         inTRU=header.indexOf("Total/ Rural/ Urban");
         inage=header.indexOf("Age-group");
         inTp=header.indexOf("Total Persons");
         inst=header.indexOf("Area Name");
         count ++;                             //--------------incrementing count
         state.push(header[inst]);
-
     }
+
     else
 
     {
-
-
-
-
         a=text.split(',');  //----------converting text in array and storing text in a, by using spit
-
-
         if(a[inTRU]=="Total")
             if(a[inage]=="All ages")
             {
                 if((state.indexOf(a[inst])<0))  //-------condition to check if duplicate data of state is not stored
                 {
-
-
                  state.push(a[inst]);    
-
-
-
                  stKey=a[inst];
-
                  if(stKey in sta)
-
                  {
-
                     sta[stKey].person += a[inTp];   
-
                     array.push(sta[stKey]);
                 }
 
-                else {
-
-
+                else 
+                {
                     sta[stKey] = {};
-
-
                     sta[stKey].stGroup = stKey;
-
-
                     sta[stKey].person = a[inTp];       
-
                     array.push(sta[stKey]);
-
-
                 }    
 
             }
@@ -125,8 +101,9 @@ function urbanization(text)
 
 
 }   
-//--------------------------functon arrange object is decending order---------------------------
+//--------------------------function called by sort for arrenging data in decending order---------------------------
 
-function compare(a,b) {
+function compare(a,b) 
+{
     return(b.person-a.person);
 }
