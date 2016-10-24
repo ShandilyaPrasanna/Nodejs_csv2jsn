@@ -41,8 +41,9 @@ rd.on('line', function(line)
 
 
 rd.on('close',function()
-{   
+{    
 
+    pushinarry(sta);
     array.sort(compare); //--------------calling compare in sort
     rd.output.write(JSON.stringify(array));   //--------converting array of objects in JSON and writing output in file
 
@@ -69,7 +70,7 @@ function urbanization(text)
 
     {
         a=text.split(',');  //----------converting text in array and storing text in a, by using spit
-        if(a[inTRU]=="Total")
+        if(a[inTRU]==parseInt("Total"));
             if(a[inage]=="All ages")
             {
                 if((state.indexOf(a[inst])<0))  //-------condition to check if duplicate data of state is not stored
@@ -79,15 +80,14 @@ function urbanization(text)
                  if(stKey in sta)
                  {
                     sta[stKey].person += a[inTp];   
-                    array.push(sta[stKey]);
+                    
                 }
 
                 else 
                 {
-                    sta[stKey] = {};
-                    sta[stKey].stGroup = stKey;
-                    sta[stKey].person = a[inTp];       
-                    array.push(sta[stKey]);
+                    sta[stKey] = {stGroup: stKey, person:a[inTp] };  
+                           
+                    
                 }    
 
             }
@@ -106,4 +106,15 @@ function urbanization(text)
 function compare(a,b) 
 {
     return(b.person-a.person);
+}
+
+
+//--------------------------functon to change to array of object---------------------------
+
+function pushinarry(obj)
+{
+ for (key in obj)
+ {
+    array.push(obj[key]);   //-------------Push in array
+  }
 }
